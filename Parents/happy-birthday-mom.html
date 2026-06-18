@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#fff5f5">
+<title>Happy Birthday, Mom</title>
+<style>
+  :root {
+    --cream: #fdf6f0;
+    --blush: #fff5f5;
+    --rose-gold: #c9a876;
+    --soft-pink: #e8a4a0;
+    --deep-brown: #6b4226;
+    --charcoal: #3a2e2e;
+    --gold: #d4af37;
+    --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-body);
+    color: var(--charcoal);
+    background: var(--cream);
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+  h1 { margin: 0; }
+  p { margin: 0 0 1.3rem 0; }
+  a { color: inherit; }
+
+  /* ---------- Shared flourish styling ---------- */
+  .vine { stroke: var(--rose-gold); stroke-width: 2; fill: none; stroke-linecap: round; }
+  .petal { fill: var(--soft-pink); opacity: 0.72; }
+  .bud { fill: var(--gold); }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    background: linear-gradient(160deg, var(--blush) 0%, var(--cream) 65%);
+    padding: 3rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .confetti {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: drift 16s ease-in-out infinite;
+    pointer-events: none;
+  }
+  .c1 { width: 14px; height: 14px; top: 14%; left: 12%; background: var(--soft-pink); animation-delay: 0s; }
+  .c2 { width: 9px;  height: 9px;  top: 22%; left: 82%; background: var(--gold); animation-delay: 2s; }
+  .c3 { width: 18px; height: 18px; top: 70%; left: 8%;  background: var(--rose-gold); animation-delay: 4s; }
+  .c4 { width: 11px; height: 11px; top: 80%; left: 88%; background: var(--soft-pink); animation-delay: 1s; }
+  .c5 { width: 8px;  height: 8px;  top: 38%; left: 90%; background: var(--gold); animation-delay: 6s; }
+  .c6 { width: 13px; height: 13px; top: 58%; left: 5%;  background: var(--soft-pink); animation-delay: 3s; }
+
+  .hero-sprig {
+    width: 56px;
+    margin-bottom: 1.4rem;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(2.3rem, 7vw, 4rem);
+    color: var(--deep-brown);
+    letter-spacing: 0.3px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.25s;
+  }
+  .hero h1 em { font-style: italic; color: var(--rose-gold); }
+  .hero .subhead {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(1.05rem, 2.6vw, 1.3rem);
+    color: var(--deep-brown);
+    margin: 1.1rem 0 0 0;
+    max-width: 420px;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 0.65s;
+  }
+
+  .scroll-cue {
+    margin-top: 3.2rem;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--rose-gold);
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeInUp 1s ease forwards;
+    animation-delay: 1.05s;
+  }
+  .scroll-cue svg { width: 14px; height: 14px; animation: floatY 2.2s ease-in-out infinite; }
+
+  /* ---------- Main content ---------- */
+  main { max-width: 700px; margin: 0 auto; padding: 0 1.6rem; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Letter section ---------- */
+  .letter { padding: 5.5rem 0 2rem 0; }
+  .letter-frame { position: relative; padding: 2.6rem 1.6rem; }
+  .corner { position: absolute; width: 92px; height: 92px; }
+  .corner-tl { top: -18px; left: -18px; }
+  .corner-br { bottom: -18px; right: -18px; transform: rotate(180deg); }
+
+  .letter p { font-size: 1.08rem; color: var(--charcoal); }
+
+  .signature {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.5rem;
+    color: var(--rose-gold);
+    margin-top: 1.8rem;
+    text-align: right;
+  }
+
+  /* ---------- Heart / love section ---------- */
+  .heart-section { text-align: center; padding: 1rem 0 4.5rem 0; }
+  .heart-section .eyebrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--deep-brown);
+    margin-bottom: 2rem;
+  }
+  .heart-wrap {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.4rem;
+  }
+  .heart-wrap:focus-visible { outline: 2px solid var(--rose-gold); outline-offset: 8px; }
+
+  .heart-svg {
+    width: 100px;
+    display: block;
+    animation: restPulse 2.6s ease-in-out infinite;
+    transition: transform 0.2s ease;
+  }
+  .heart-wrap:hover .heart-svg { transform: scale(1.05); }
+  .heart-svg.beat { animation: heartBeat 0.6s ease; }
+
+  .heart-count {
+    margin-top: 1.3rem;
+    font-size: 0.88rem;
+    color: var(--rose-gold);
+    font-style: italic;
+    letter-spacing: 0.3px;
+  }
+
+  /* ---------- Trophy / celebration section ---------- */
+  .trophy-section { text-align: center; padding: 1rem 0 4.5rem 0; }
+  .trophy-section .eyebrow {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.35rem;
+    color: var(--deep-brown);
+    margin-bottom: 2rem;
+  }
+
+  .trophy-wrap {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 16px;
+  }
+  .trophy-wrap:focus-visible { outline: 2px solid var(--rose-gold); outline-offset: 8px; }
+
+  .trophy-svg {
+    width: 132px;
+    display: block;
+    transition: transform 0.25s ease;
+    transform-origin: 50% 88%;
+  }
+  .trophy-wrap:hover .trophy-svg { transform: scale(1.05) rotate(-2deg); }
+  .trophy-svg.bounce { animation: trophyBounce 0.7s ease; }
+
+  .trophy-stroke { stroke: var(--rose-gold); stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .trophy-fill { fill: var(--gold); opacity: 0.18; }
+  .trophy-star { fill: var(--gold); }
+
+  .glow-ring {
+    position: absolute;
+    inset: -16px;
+    border-radius: 50%;
+    border: 1.5px solid var(--rose-gold);
+    opacity: 0.35;
+    animation: pulseRing 2.6s ease-in-out infinite;
+    pointer-events: none;
+  }
+
+  .sparkle { position: absolute; width: 16px; height: 16px; animation: twinkle 2.4s ease-in-out infinite; pointer-events: none; }
+  .sp1 { top: -10px; left: 4px; animation-delay: 0s; }
+  .sp2 { top: 26px; right: -16px; animation-delay: 0.8s; }
+  .sp3 { bottom: 2px; left: -18px; animation-delay: 1.5s; }
+
+  .ribbon-wrap { margin-top: 1.7rem; min-height: 2.5rem; }
+  .ribbon {
+    display: inline-block;
+    padding: 0.55rem 1.5rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--soft-pink), var(--rose-gold));
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+    box-shadow: 0 8px 18px rgba(201, 168, 118, 0.35);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .ribbon.swap { opacity: 0; transform: translateY(6px) scale(0.95); }
+
+  .tap-hint {
+    margin-top: 1.3rem;
+    font-size: 0.74rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--rose-gold);
+    opacity: 0.75;
+  }
+
+  /* ---------- Closing flourish ---------- */
+  .closing-bloom { text-align: center; padding: 1rem 0 5.5rem 0; }
+  .closing-bloom svg { width: 60px; animation: floatY 4.5s ease-in-out infinite; }
+
+  /* ---------- Animations ---------- */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    50%      { transform: translate(12px, -16px) rotate(10deg); }
+  }
+  @keyframes restPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.035); }
+  }
+  @keyframes heartBeat {
+    0%   { transform: scale(1); }
+    25%  { transform: scale(1.28); }
+    40%  { transform: scale(0.92); }
+    60%  { transform: scale(1.14); }
+    100% { transform: scale(1); }
+  }
+  @keyframes heartFloat {
+    0%   { transform: translate(0, 0) scale(0.6); opacity: 0; }
+    15%  { opacity: 1; transform: translate(0, 0) scale(1); }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0.9); opacity: 0; }
+  }
+  @keyframes trophyBounce {
+    0%   { transform: scale(1) rotate(0deg); }
+    30%  { transform: scale(1.18) rotate(-5deg); }
+    55%  { transform: scale(0.94) rotate(4deg); }
+    75%  { transform: scale(1.06) rotate(-2deg); }
+    100% { transform: scale(1) rotate(0deg); }
+  }
+  @keyframes pulseRing {
+    0%, 100% { transform: scale(1); opacity: 0.35; }
+    50%      { transform: scale(1.08); opacity: 0.12; }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.15; transform: scale(0.75); }
+    50%      { opacity: 1; transform: scale(1.15); }
+  }
+  @keyframes confettiBurst {
+    0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+  }
+  .confetti-piece {
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+    animation-name: confettiBurst;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+  }
+  .heart-particle {
+    position: fixed;
+    top: 0; left: 0;
+    width: 14px;
+    height: 14px;
+    pointer-events: none;
+    z-index: 999;
+    clip-path: path("M7,13 C7,13 1,8 1,4 C1,1 3,0 5,1 C6,1.5 7,3 7,3 C7,3 8,1.5 9,1 C11,0 13,1 13,4 C13,8 7,13 7,13 Z");
+    animation-name: heartFloat;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .letter { padding: 4rem 0 1.5rem 0; }
+    .letter-frame { padding: 2.2rem 1rem; }
+    .corner { width: 64px; height: 64px; }
+    .corner-tl { top: -10px; left: -10px; }
+    .corner-br { bottom: -10px; right: -10px; }
+    .heart-svg { width: 82px; }
+    .trophy-svg { width: 110px; }
+    .glow-ring { inset: -12px; }
+  }
+</style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="confetti c1"></div>
+    <div class="confetti c2"></div>
+    <div class="confetti c3"></div>
+    <div class="confetti c4"></div>
+    <div class="confetti c5"></div>
+    <div class="confetti c6"></div>
+
+    <svg class="hero-sprig" viewBox="0 0 80 100" aria-hidden="true">
+      <path class="vine" d="M40 96 C 37 72, 45 50, 40 18"/>
+      <path class="petal" d="M40 60 C 30 55, 19 58, 14 47 C 25 49, 35 52, 40 60 Z"/>
+      <path class="petal" d="M40 44 C 50 39, 61 42, 66 31 C 55 33, 45 37, 40 44 Z"/>
+      <circle class="bud" cx="40" cy="16" r="4.5"/>
+    </svg>
+
+    <h1>Happy Birthday, <em>Mom</em></h1>
+    <p class="subhead">A little letter, made with all my love.</p>
+
+    <a href="#letter" class="scroll-cue" aria-label="Scroll down to read the letter">
+      <span>Read my letter</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 4v15M5 13l7 7 7-7"/>
+      </svg>
+    </a>
+  </section>
+
+  <main>
+
+    <section id="letter" class="letter reveal">
+      <div class="letter-frame">
+        <svg class="corner corner-tl" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="vine" d="M6 6 C 32 10, 52 26, 56 56"/>
+          <path class="petal" d="M21 16 C 13 11, 9 19, 15 25 C 21 23, 25 19, 21 16 Z"/>
+          <path class="petal" d="M36 31 C 29 27, 25 35, 31 41 C 37 39, 41 35, 36 31 Z"/>
+          <g transform="translate(50,50)">
+            <circle class="bud" r="3"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(90)"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(180)"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(270)"/>
+          </g>
+        </svg>
+
+        <p>Happy birthday, Mom! I hope you like this.</p>
+
+        <p>I love you so much and couldn't ask for a better mom. You still look young and beautiful.</p>
+
+        <p>I will miss you when I go off to college, but I hope you will visit me even though it is a bit of a trip.</p>
+
+        <p>Thank you for always being kind, understanding, and accepting.</p>
+
+        <p class="signature">&mdash; Your Eldest Son</p>
+
+        <svg class="corner corner-br" viewBox="0 0 120 120" aria-hidden="true">
+          <path class="vine" d="M6 6 C 32 10, 52 26, 56 56"/>
+          <path class="petal" d="M21 16 C 13 11, 9 19, 15 25 C 21 23, 25 19, 21 16 Z"/>
+          <path class="petal" d="M36 31 C 29 27, 25 35, 31 41 C 37 39, 41 35, 36 31 Z"/>
+          <g transform="translate(50,50)">
+            <circle class="bud" r="3"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(90)"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(180)"/>
+            <path class="petal" d="M0 -9 C 4.5 -9 4.5 0 0 0 C -4.5 0 -4.5 -9 0 -9 Z" transform="rotate(270)"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="heart" class="heart-section reveal" data-celebrate-heart="true">
+      <p class="eyebrow">And just because</p>
+
+      <div class="heart-wrap" id="heartButton" role="button" tabindex="0" aria-label="Tap the heart to send love">
+        <svg id="heartSvg" class="heart-svg" viewBox="0 0 100 90" aria-hidden="true">
+          <defs>
+            <linearGradient id="heartGradient" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--soft-pink)"/>
+              <stop offset="100%" stop-color="var(--rose-gold)"/>
+            </linearGradient>
+          </defs>
+          <path fill="url(#heartGradient)" d="M50,82 C50,82 8,55 8,28 C8,10 24,0 38,8 C45,12 50,20 50,20 C50,20 55,12 62,8 C76,0 92,10 92,28 C92,55 50,82 50,82 Z"/>
+        </svg>
+      </div>
+
+      <p class="heart-count" id="heartCount">tap for a little love</p>
+    </section>
+
+    <section id="trophy" class="trophy-section reveal" data-celebrate="true">
+      <p class="eyebrow">And the award goes to...</p>
+
+      <div class="trophy-wrap" id="trophyButton" role="button" tabindex="0" aria-label="Tap the trophy to celebrate Mom">
+        <div class="glow-ring"></div>
+        <svg class="sparkle sp1" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 1 C11 7 13 9 19 10 C13 11 11 13 10 19 C9 13 7 11 1 10 C7 9 9 7 10 1 Z" fill="var(--gold)"/>
+        </svg>
+        <svg class="sparkle sp2" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 1 C11 7 13 9 19 10 C13 11 11 13 10 19 C9 13 7 11 1 10 C7 9 9 7 10 1 Z" fill="var(--soft-pink)"/>
+        </svg>
+        <svg class="sparkle sp3" viewBox="0 0 20 20" aria-hidden="true">
+          <path d="M10 1 C11 7 13 9 19 10 C13 11 11 13 10 19 C9 13 7 11 1 10 C7 9 9 7 10 1 Z" fill="var(--gold)"/>
+        </svg>
+        <svg id="trophySvg" class="trophy-svg" viewBox="0 0 140 170" aria-hidden="true">
+          <path class="trophy-stroke" fill="none" d="M30,38 C5,38 5,72 30,70"/>
+          <path class="trophy-stroke" fill="none" d="M110,38 C135,38 135,72 110,70"/>
+          <path class="trophy-stroke trophy-fill" d="M30,25 C30,70 40,95 70,95 C100,95 110,70 110,25 Z"/>
+          <rect class="trophy-stroke trophy-fill" x="63" y="95" width="14" height="22" rx="2"/>
+          <rect class="trophy-stroke trophy-fill" x="45" y="117" width="50" height="10" rx="3"/>
+          <rect class="trophy-stroke trophy-fill" x="35" y="127" width="70" height="12" rx="4"/>
+          <path class="trophy-star" d="M70,42 L74,51 L84,52 L76,58 L78,68 L70,62 L62,68 L64,58 L56,52 L66,51 Z"/>
+        </svg>
+      </div>
+
+      <div class="ribbon-wrap">
+        <span class="ribbon" id="ribbonText">World's Best Mom</span>
+      </div>
+      <p class="tap-hint">tap the trophy</p>
+    </section>
+
+    <div class="closing-bloom reveal">
+      <svg viewBox="0 0 100 100" aria-hidden="true">
+        <g transform="translate(50,50)">
+          <circle class="bud" r="6"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z" transform="rotate(60)"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z" transform="rotate(120)"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z" transform="rotate(180)"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z" transform="rotate(240)"/>
+          <path class="petal" d="M0 -23 C 11 -23 11 0 0 0 C -11 0 -11 -23 0 -23 Z" transform="rotate(300)"/>
+        </g>
+      </svg>
+    </div>
+
+  </main>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var reveals = document.querySelectorAll('.reveal');
+      var ribbonPhrases = ["World's Best Mom", "Kindest Person I Know", "Forever My Hero", "Still Looks 25", "Most Hugs Given", "Undefeated Since Day One"];
+      var ribbonIndex = 0;
+      var heartCountValue = 0;
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function confettiShower(count) {
+        if (reduceMotion) return;
+        var colors = ['var(--rose-gold)', 'var(--soft-pink)', 'var(--gold)', '#ffffff'];
+        var vw = window.innerWidth;
+        var vh = window.innerHeight;
+        for (var i = 0; i < count; i++) {
+          var piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          var startX = Math.random() * vw;
+          var dx = (Math.random() * 160 - 80);
+          var dy = vh * 0.65 + Math.random() * vh * 0.5;
+          var size = 6 + Math.random() * 6;
+          piece.style.left = startX + 'px';
+          piece.style.top = '-20px';
+          piece.style.width = size + 'px';
+          piece.style.height = size + 'px';
+          piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+          piece.style.setProperty('--dx', dx + 'px');
+          piece.style.setProperty('--dy', dy + 'px');
+          piece.style.setProperty('--rot', (Math.random() * 720 - 360) + 'deg');
+          piece.style.animationDuration = (2.4 + Math.random() * 1.8) + 's';
+          piece.style.animationDelay = (Math.random() * 0.5) + 's';
+          document.body.appendChild(piece);
+          piece.addEventListener('animationend', function () { this.remove(); });
+        }
+      }
+
+      function burstConfetti(x, y, count) {
+        if (reduceMotion) return;
+        var colors = ['var(--rose-gold)', 'var(--soft-pink)', 'var(--gold)', '#ffffff'];
+        for (var i = 0; i < count; i++) {
+          var piece = document.createElement('div');
+          piece.className = 'confetti-piece';
+          var angle = Math.random() * Math.PI * 2;
+          var distance = 50 + Math.random() * 160;
+          var dx = Math.cos(angle) * distance;
+          var dy = Math.sin(angle) * distance + 240 + Math.random() * 140;
+          var size = 5 + Math.random() * 5;
+          piece.style.left = x + 'px';
+          piece.style.top = y + 'px';
+          piece.style.width = size + 'px';
+          piece.style.height = size + 'px';
+          piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+          piece.style.setProperty('--dx', dx + 'px');
+          piece.style.setProperty('--dy', dy + 'px');
+          piece.style.setProperty('--rot', (Math.random() * 600 - 300) + 'deg');
+          piece.style.animationDuration = (1.3 + Math.random() * 1.1) + 's';
+          document.body.appendChild(piece);
+          piece.addEventListener('animationend', function () { this.remove(); });
+        }
+      }
+
+      function spawnHearts(x, y, count) {
+        if (reduceMotion) return;
+        var colors = ['var(--rose-gold)', 'var(--soft-pink)', 'var(--gold)'];
+        for (var i = 0; i < count; i++) {
+          var h = document.createElement('div');
+          h.className = 'heart-particle';
+          var dx = (Math.random() * 120 - 60);
+          var dy = -(120 + Math.random() * 100);
+          h.style.left = (x - 7) + 'px';
+          h.style.top = (y - 7) + 'px';
+          h.style.background = colors[Math.floor(Math.random() * colors.length)];
+          h.style.setProperty('--dx', dx + 'px');
+          h.style.setProperty('--dy', dy + 'px');
+          h.style.animationDuration = (1.5 + Math.random() * 0.6) + 's';
+          h.style.animationDelay = (Math.random() * 0.15) + 's';
+          document.body.appendChild(h);
+          h.addEventListener('animationend', function () { this.remove(); });
+        }
+      }
+
+      function celebrateHeart() {
+        var heartEl = document.getElementById('heartSvg');
+        var countEl = document.getElementById('heartCount');
+        if (!heartEl) return;
+        var rect = heartEl.getBoundingClientRect();
+        spawnHearts(rect.left + rect.width / 2, rect.top + rect.height / 2, 6);
+
+        heartEl.classList.remove('beat');
+        void heartEl.offsetWidth;
+        heartEl.classList.add('beat');
+
+        heartCountValue++;
+        if (countEl) {
+          countEl.textContent = heartCountValue === 1 ? '1 heart sent' : heartCountValue + ' hearts sent';
+        }
+      }
+
+      function celebrateTrophy() {
+        var trophyEl = document.getElementById('trophySvg');
+        var ribbonEl = document.getElementById('ribbonText');
+        if (!trophyEl) return;
+        var rect = trophyEl.getBoundingClientRect();
+        burstConfetti(rect.left + rect.width / 2, rect.top + rect.height / 2, 34);
+
+        trophyEl.classList.remove('bounce');
+        void trophyEl.offsetWidth;
+        trophyEl.classList.add('bounce');
+
+        if (ribbonEl) {
+          ribbonIndex = (ribbonIndex + 1) % ribbonPhrases.length;
+          ribbonEl.classList.add('swap');
+          setTimeout(function () {
+            ribbonEl.textContent = ribbonPhrases[ribbonIndex];
+            ribbonEl.classList.remove('swap');
+          }, 200);
+        }
+      }
+
+      var heartEl = document.getElementById('heartSvg');
+      if (heartEl) {
+        heartEl.addEventListener('animationend', function (e) {
+          if (e.animationName === 'heartBeat') { heartEl.classList.remove('beat'); }
+        });
+      }
+
+      var heartButton = document.getElementById('heartButton');
+      if (heartButton) {
+        heartButton.addEventListener('click', celebrateHeart);
+        heartButton.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); celebrateHeart(); }
+        });
+      }
+
+      var trophyButton = document.getElementById('trophyButton');
+      if (trophyButton) {
+        trophyButton.addEventListener('click', celebrateTrophy);
+        trophyButton.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); celebrateTrophy(); }
+        });
+      }
+
+      // Confetti shower right when the page opens
+      setTimeout(function () { confettiShower(70); }, 150);
+
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function (el) { el.classList.add('in-view'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            if (entry.target.dataset.celebrate === 'true') { setTimeout(celebrateTrophy, 400); }
+            if (entry.target.dataset.celebrateHeart === 'true') { setTimeout(celebrateHeart, 400); }
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      reveals.forEach(function (el) { observer.observe(el); });
+    });
+  </script>
+
+</body>
+</html>
