@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Father's Day 🐛</title>
+<link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Fredoka+One&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --gold: #f5c842;
+    --orange: #f47c30;
+    --cream: #fdf6e3;
+    --green: #3cb371;
+    --red: #e84040;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--navy);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  #cursor {
+    position: fixed;
+    width: 28px; height: 28px;
+    font-size: 22px;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s;
+  }
+
+  /* HERO */
+  #hero {
+    position: relative;
+    text-align: center;
+    padding: 60px 20px 40px;
+    overflow: hidden;
+  }
+
+  #hero h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2.8rem, 8vw, 6rem);
+    color: var(--gold);
+    text-shadow: 4px 4px 0 var(--orange), 8px 8px 0 rgba(0,0,0,0.3);
+    line-height: 1.1;
+    animation: titleBounce 2s ease-in-out infinite;
+    position: relative;
+    z-index: 2;
+  }
+
+  #hero .subtitle {
+    font-family: 'Boogaloo', cursive;
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    color: #fff;
+    margin-top: 12px;
+    opacity: 0.85;
+    z-index: 2;
+    position: relative;
+  }
+
+  @keyframes titleBounce {
+    0%, 100% { transform: translateY(0) rotate(-1deg); }
+    50% { transform: translateY(-10px) rotate(1deg); }
+  }
+
+  /* CONFETTI LAYER */
+  #confetti-layer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .confetti-piece {
+    position: absolute;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    animation: confettiFall linear infinite;
+    opacity: 0.85;
+  }
+
+  @keyframes confettiFall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* MAIN GRID */
+  .main-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--cream);
+    border-radius: 20px;
+    padding: 28px 24px;
+    border: 4px solid var(--navy);
+    box-shadow: 6px 6px 0 var(--gold);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0 var(--gold);
+  }
+
+  .card-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    color: var(--navy);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* DAD JOKE CARD */
+  #joke-card { grid-column: span 1; }
+
+  #joke-display {
+    background: white;
+    border-radius: 12px;
+    border: 2px dashed var(--orange);
+    padding: 18px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.5;
+    margin-bottom: 14px;
+    position: relative;
+  }
+
+  #punchline {
+    display: none;
+    margin-top: 10px;
+    color: var(--orange);
+    font-weight: 800;
+    font-size: 1.1rem;
+  }
+
+  .btn {
+    background: var(--navy);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin: 4px;
+  }
+
+  .btn:hover { background: var(--orange); transform: scale(1.04); }
+  .btn:active { transform: scale(0.97); }
+  .btn.gold { background: var(--gold); color: var(--navy); }
+  .btn.green { background: var(--green); }
+  .btn.red { background: var(--red); }
+
+  /* DAD STATS */
+  #stats-card { grid-column: span 1; }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 2px dotted #ccc;
+    font-size: 0.95rem;
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .stat-bar-wrap {
+    width: 120px;
+    height: 14px;
+    background: #e0d8c0;
+    border-radius: 99px;
+    overflow: hidden;
+    border: 2px solid var(--navy);
+  }
+
+  .stat-bar {
+    height: 100%;
+    border-radius: 99px;
+    background: var(--gold);
+    transition: width 1.5s cubic-bezier(.17,.67,.45,1.2);
+    width: 0%;
+  }
+
+  /* BUG PARADE */
+  #bug-parade-card { grid-column: 1 / -1; }
+
+  #bug-stage {
+    background: linear-gradient(180deg, #87ceeb 0%, #87ceeb 60%, #5a8a3c 60%, #3a6a22 100%);
+    border-radius: 14px;
+    border: 3px solid var(--navy);
+    height: 160px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bug-walker {
+    position: absolute;
+    bottom: 38px;
+    font-size: 28px;
+    animation: walkAcross linear infinite;
+    white-space: nowrap;
+    filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+  }
+
+  .bug-walker.flipped { transform: scaleX(-1); }
+
+  @keyframes walkAcross {
+    0% { left: -60px; }
+    100% { left: 110%; }
+  }
+
+  /* CLOUD */
+  .cloud {
+    position: absolute;
+    top: 20px;
+    font-size: 40px;
+    animation: floatCloud linear infinite;
+    opacity: 0.85;
+  }
+
+  @keyframes floatCloud {
+    0% { left: -80px; }
+    100% { left: 110%; }
+  }
+
+  /* SUN */
+  .sun {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 44px;
+    animation: spinSun 10s linear infinite;
+  }
+
+  @keyframes spinSun {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* GRASS BLADES */
+  .grass-label {
+    position: absolute;
+    bottom: 4px;
+    left: 0; right: 0;
+    text-align: center;
+    font-family: 'Boogaloo', cursive;
+    color: rgba(255,255,255,0.8);
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* MESSAGE BUILDER */
+  #message-card { grid-column: span 1; }
+
+  #message-output {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    padding: 14px;
+    min-height: 80px;
+    font-size: 0.95rem;
+    color: var(--navy);
+    font-weight: 600;
+    line-height: 1.6;
+    margin-top: 12px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .trait-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .trait-btn {
+    background: white;
+    border: 2px solid var(--navy);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    transition: background 0.15s, color 0.15s;
+    color: var(--navy);
+  }
+
+  .trait-btn.selected {
+    background: var(--gold);
+    border-color: var(--orange);
+    color: var(--navy);
+  }
+
+  .trait-btn:hover { background: #ffe9a0; }
+
+  /* GRILL METER */
+  #grill-card { grid-column: span 1; }
+
+  #grill-meter-wrap {
+    width: 100%;
+    height: 36px;
+    background: #e0d8c0;
+    border-radius: 99px;
+    border: 3px solid var(--navy);
+    overflow: hidden;
+    margin: 14px 0;
+    position: relative;
+  }
+
+  #grill-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #ffe08a, #ff7f00, #c00);
+    transition: width 0.3s;
+  }
+
+  #grill-label {
+    font-weight: 800;
+    color: var(--navy);
+    font-size: 1.1rem;
+    text-align: center;
+    margin-top: 6px;
+  }
+
+  #grill-emoji {
+    font-size: 2.5rem;
+    text-align: center;
+    display: block;
+    animation: sizzle 0.5s ease-in-out infinite alternate;
+    margin-top: 4px;
+  }
+
+  @keyframes sizzle {
+    from { transform: rotate(-5deg) scale(1); }
+    to { transform: rotate(5deg) scale(1.12); }
+  }
+
+  .grill-btns { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+
+  /* TROPHY */
+  #trophy-card { grid-column: span 1; }
+
+  #trophy-display {
+    text-align: center;
+    padding: 10px;
+  }
+
+  #trophy-display .big-trophy {
+    font-size: 5rem;
+    display: block;
+    animation: trophyBounce 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  }
+
+  @keyframes trophyBounce {
+    0%, 100% { transform: scale(1) rotate(-3deg); }
+    50% { transform: scale(1.1) rotate(3deg); }
+  }
+
+  #trophy-display .trophy-text {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--navy);
+    margin-top: 8px;
+    line-height: 1.3;
+  }
+
+  #trophy-display .trophy-sub {
+    font-size: 0.9rem;
+    color: #888;
+    margin-top: 6px;
+    font-weight: 600;
+  }
+
+  /* FIREWORK BUTTON */
+  #firework-btn {
+    display: block;
+    margin: 30px auto 0;
+    padding: 16px 40px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.5rem;
+    background: var(--gold);
+    color: var(--navy);
+    border: 4px solid var(--navy);
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 var(--navy);
+    transition: transform 0.1s, box-shadow 0.1s;
+    position: relative;
+    z-index: 5;
+  }
+
+  #firework-btn:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 7px 7px 0 var(--navy);
+  }
+
+  #firework-btn:active {
+    transform: translate(3px, 3px);
+    box-shadow: 2px 2px 0 var(--navy);
+  }
+
+  /* FIREWORKS CANVAS */
+  #fw-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 9998;
+  }
+
+  /* FOOTER */
+  footer {
+    text-align: center;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.8rem;
+    padding: 20px;
+    position: relative;
+    z-index: 3;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 600px) {
+    .main-grid { grid-template-columns: 1fr; }
+    #bug-parade-card { grid-column: span 1; }
+  }
+
+  /* Floating hearts on click */
+  .float-heart {
+    position: fixed;
+    font-size: 1.5rem;
+    pointer-events: none;
+    z-index: 9997;
+    animation: floatUp 1.2s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-100px) scale(1.6); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor">🐛</div>
+
+<!-- Confetti layer -->
+<div id="confetti-layer"></div>
+
+<!-- Fireworks canvas -->
+<canvas id="fw-canvas"></canvas>
+
+<!-- HERO -->
+<div id="hero">
+  <h1>🎉 Happy Father's Day! 🎉</h1>
+  <p class="subtitle">A totally over-engineered celebration — just like Dad would want 🐛</p>
+  <button id="firework-btn" onclick="launchFireworks()">🎆 Launch Fireworks! 🎆</button>
+</div>
+
+<!-- MAIN GRID -->
+<div class="main-grid">
+
+  <!-- BUG PARADE -->
+  <div class="card" id="bug-parade-card">
+    <div class="card-title">🐛 The Father's Day Bug Parade</div>
+    <div id="bug-stage">
+      <div class="sun">☀️</div>
+      <div id="clouds-wrap"></div>
+      <div id="bugs-wrap"></div>
+      <div class="grass-label">🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱🌿🌱</div>
+    </div>
+    <div style="margin-top:12px; display:flex; gap:8px; flex-wrap:wrap;">
+      <button class="btn gold" onclick="addBug()">+ Add Bug</button>
+      <button class="btn green" onclick="speedUp()">⚡ Speed Up</button>
+      <button class="btn red" onclick="clearBugs()">🧹 Clear</button>
+    </div>
+    <p style="font-size:0.8rem; color:#888; margin-top:8px;">Each bug wears a tiny party hat in Dad's honor 🎩</p>
+  </div>
+
+  <!-- DAD JOKE CARD -->
+  <div class="card" id="joke-card">
+    <div class="card-title">😂 Dad Joke Generator</div>
+    <div id="joke-display">
+      <div>
+        <div id="joke-text">Press the button. You know you want to.</div>
+        <div id="punchline" id="punchline"></div>
+      </div>
+    </div>
+    <div>
+      <button class="btn" onclick="revealPunchline()" id="reveal-btn" style="display:none">🥁 Reveal Punchline</button>
+      <button class="btn gold" onclick="nextJoke()">🎲 New Joke</button>
+    </div>
+    <p style="font-size:0.8rem; color:#888; margin-top:8px;" id="groan-count">Groans: 0 | Laughs: 0</p>
+    <div style="margin-top:8px; display:flex; gap:8px;">
+      <button class="btn green" onclick="react('laugh')" id="laugh-btn" style="display:none">😂 Ha!</button>
+      <button class="btn red" onclick="react('groan')" id="groan-btn" style="display:none">🙄 Groan</button>
+    </div>
+  </div>
+
+  <!-- DAD STATS -->
+  <div class="card" id="stats-card">
+    <div class="card-title">📊 Official Dad Stats™</div>
+    <div id="stats-container">
+      <!-- filled by JS -->
+    </div>
+    <button class="btn gold" style="margin-top:12px" onclick="rerollStats()">🎲 Re-roll Stats</button>
+  </div>
+
+  <!-- GRILL MASTER METER -->
+  <div class="card" id="grill-card">
+    <div class="card-title">🔥 Grill Master Meter</div>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:4px;">How hot is Dad's grill game right now?</p>
+    <div id="grill-meter-wrap"><div id="grill-fill"></div></div>
+    <div id="grill-label">COLD GRILL</div>
+    <span id="grill-emoji">🥩</span>
+    <div class="grill-btns">
+      <button class="btn" onclick="adjustGrill(-10)">❄️ Cool it</button>
+      <button class="btn gold" onclick="adjustGrill(10)">🔥 Heat up</button>
+      <button class="btn green" onclick="adjustGrill(100)">💥 MAX HEAT</button>
+    </div>
+  </div>
+
+  <!-- MESSAGE CARD -->
+  <div class="card" id="message-card">
+    <div class="card-title">💌 A Message From the Heart</div>
+    <div style="background:white; border:2px dashed var(--orange); border-radius:12px; padding:20px; text-align:center; font-size:1.05rem; color:var(--navy); font-weight:600; line-height:1.8;">
+      ❤️<br><br>
+      Thank you Dad for being the best father ever and always helping me and teaching me about new things.<br><br>
+      I couldn't ask for a better father.<br><br>
+      ❤️
+    </div>
+  </div>
+
+  <!-- TROPHY -->
+  <div class="card" id="trophy-card">
+    <div class="card-title">🏆 World's Best Dad Award</div>
+    <div id="trophy-display">
+      <span class="big-trophy">🏆</span>
+      <div class="trophy-text" id="trophy-text">World's Best Dad</div>
+      <div class="trophy-sub" id="trophy-sub">Certified by the International Bureau of Dads</div>
+    </div>
+    <button class="btn gold" style="margin-top:12px; width:100%" onclick="newTrophy()">🎲 New Title</button>
+  </div>
+
+
+  <!-- SPIN THE WHEEL -->
+  <div class="card" id="wheel-card">
+    <div class="card-title">🎡 Spin the Dad Wheel</div>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:12px;">What should Dad do today?</p>
+    <div style="position:relative; text-align:center;">
+      <canvas id="wheel-canvas" width="240" height="240" style="border-radius:50%; cursor:pointer; display:block; margin:0 auto;"></canvas>
+      <div id="wheel-pointer" style="font-size:2rem; margin:8px 0;">⬆️</div>
+    </div>
+    <div id="wheel-result" style="background:white; border:2px solid var(--navy); border-radius:10px; padding:12px; text-align:center; font-weight:800; font-size:1rem; color:var(--navy); margin:10px 0; min-height:44px;"></div>
+    <button class="btn gold" style="width:100%" onclick="spinWheel()">🎡 SPIN!</button>
+  </div>
+
+  <!-- DAD QUOTE MACHINE -->
+  <div class="card" id="quote-card">
+    <div class="card-title">💬 Dad Wisdom Generator</div>
+    <div id="quote-display" style="background:white; border:2px dashed var(--green); border-radius:12px; padding:18px; min-height:90px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:1rem; color:var(--navy); font-weight:600; line-height:1.6; margin-bottom:12px;">
+      Click below for a dose of Dad wisdom.
+    </div>
+    <div id="quote-author" style="text-align:right; font-size:0.85rem; color:#888; margin-bottom:10px; font-style:italic;"></div>
+    <button class="btn gold" onclick="newQuote()">🧠 New Wisdom</button>
+    <button class="btn green" onclick="shareQuote()" style="margin-left:4px">📋 Copy</button>
+  </div>
+
+  <!-- DAD TRIVIA -->
+  <div class="card" id="trivia-card" style="grid-column: span 1;">
+    <div class="card-title">🧩 Dad Trivia Challenge</div>
+    <div id="trivia-q" style="background:white; border:2px solid var(--navy); border-radius:10px; padding:14px; font-weight:700; font-size:0.95rem; color:var(--navy); margin-bottom:12px; min-height:60px;"></div>
+    <div id="trivia-opts" style="display:flex; flex-direction:column; gap:8px; margin-bottom:10px;"></div>
+    <div id="trivia-result" style="font-weight:800; font-size:1rem; min-height:24px; text-align:center;"></div>
+    <div style="display:flex; gap:8px; margin-top:10px; align-items:center;">
+      <button class="btn gold" onclick="newTrivia()">⏭️ Next Question</button>
+      <span style="font-size:0.85rem; color:#888;" id="trivia-score">Score: 0 / 0</span>
+    </div>
+  </div>
+
+  <!-- DAD COMPLIMENT CANNON -->
+  <div class="card" id="compliment-card">
+    <div class="card-title">💥 Compliment Cannon</div>
+    <p style="font-size:0.9rem; color:#555; margin-bottom:12px;">Fire a compliment at Dad!</p>
+    <div id="compliment-display" style="background:white; border:2px dashed var(--gold); border-radius:12px; padding:18px; min-height:80px; display:flex; align-items:center; justify-content:center; text-align:center; font-size:1.05rem; color:var(--navy); font-weight:700; line-height:1.6; margin-bottom:12px;">
+      Ready to fire...
+    </div>
+    <button class="btn gold" style="width:100%; font-size:1.1rem;" onclick="fireCompliment()">💥 FIRE!</button>
+    <div id="cannon-streak" style="text-align:center; font-size:0.8rem; color:#888; margin-top:8px;">Compliments fired: 0</div>
+  </div>
+
+</div>
+
+<footer>Made with 🐛 + ❤️ for Father's Day &nbsp;•&nbsp; Yes, this took longer than it needed to. Dad would be proud.</footer>
+
+<script>
+// ---- CURSOR ----
+const cursor = document.getElementById('cursor');
+const bugEmojis = ['🐛','🐞','🦋','🐝','🪲','🦗','🪳','🦟','🐌','🦎'];
+let cursorBug = 0;
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+document.addEventListener('click', e => {
+  cursorBug = (cursorBug + 1) % bugEmojis.length;
+  cursor.textContent = bugEmojis[cursorBug];
+  spawnHeart(e.clientX, e.clientY);
+});
+
+function spawnHeart(x, y) {
+  const h = document.createElement('div');
+  h.className = 'float-heart';
+  h.textContent = ['❤️','💛','🧡','💚','🎉','⭐','🐛'][Math.floor(Math.random()*7)];
+  h.style.left = x + 'px';
+  h.style.top = y + 'px';
+  document.body.appendChild(h);
+  setTimeout(() => h.remove(), 1300);
+}
+
+// ---- CONFETTI ----
+const confettiColors = ['#f5c842','#f47c30','#e84040','#3cb371','#1a2744','#fff','#ff69b4','#00bcd4'];
+const confettiLayer = document.getElementById('confetti-layer');
+for (let i = 0; i < 60; i++) {
+  const c = document.createElement('div');
+  c.className = 'confetti-piece';
+  c.style.left = Math.random() * 100 + 'vw';
+  c.style.animationDuration = (3 + Math.random() * 5) + 's';
+  c.style.animationDelay = (Math.random() * 5) + 's';
+  c.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+  c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+  c.style.width = c.style.height = (6 + Math.random() * 8) + 'px';
+  confettiLayer.appendChild(c);
+}
+
+// ---- BUG PARADE ----
+const bugsList = ['🐛🎩','🐞🎩','🦋🎩','🐝🎩','🪲🎩','🦗🎩','🐌🎩','🪳🎩','🦟🎩','🦎🎩'];
+const bugsWrap = document.getElementById('bugs-wrap');
+const cloudsWrap = document.getElementById('clouds-wrap');
+let bugSpeed = 1;
+let bugCount = 0;
+
+function addBug() {
+  if (bugCount > 20) return;
+  bugCount++;
+  const b = document.createElement('div');
+  b.className = 'bug-walker' + (Math.random() > 0.5 ? ' flipped' : '');
+  b.textContent = bugsList[Math.floor(Math.random() * bugsList.length)];
+  const dur = (8 + Math.random() * 10) / bugSpeed;
+  b.style.animationDuration = dur + 's';
+  b.style.animationDelay = -(Math.random() * dur) + 's';
+  b.style.bottom = (32 + Math.random() * 30) + 'px';
+  b.style.fontSize = (20 + Math.random() * 18) + 'px';
+  bugsWrap.appendChild(b);
+}
+
+function speedUp() {
+  bugSpeed = Math.min(bugSpeed + 0.5, 4);
+  document.querySelectorAll('.bug-walker').forEach(b => {
+    b.style.animationDuration = (parseFloat(b.style.animationDuration) * 0.7) + 's';
+  });
+}
+
+function clearBugs() {
+  bugsWrap.innerHTML = '';
+  bugCount = 0;
+  bugSpeed = 1;
+}
+
+// Add initial bugs
+for (let i = 0; i < 5; i++) setTimeout(addBug, i * 400);
+
+// Clouds
+for (let i = 0; i < 3; i++) {
+  const cl = document.createElement('div');
+  cl.className = 'cloud';
+  cl.textContent = '☁️';
+  cl.style.animationDuration = (18 + i * 8) + 's';
+  cl.style.animationDelay = -(i * 7) + 's';
+  cl.style.top = (8 + i * 12) + 'px';
+  cl.style.fontSize = (30 + i * 10) + 'px';
+  cloudsWrap.appendChild(cl);
+}
+
+// ---- DAD JOKES ----
+const jokes = [
+  { setup: "Why don't scientists trust atoms?", punchline: "Because they make up everything!" },
+  { setup: "I'm reading a book about anti-gravity.", punchline: "It's impossible to put down!" },
+  { setup: "Did you hear about the guy who invented Lifesavers?", punchline: "He made a mint!" },
+  { setup: "Why can't you give Elsa a balloon?", punchline: "Because she'll let it go!" },
+  { setup: "I used to hate facial hair...", punchline: "...but then it grew on me!" },
+  { setup: "Why do dads take an extra pair of socks when they go golfing?", punchline: "In case they get a hole in one!" },
+  { setup: "What do you call cheese that isn't yours?", punchline: "Nacho cheese!" },
+  { setup: "I told my wife she was drawing her eyebrows too high.", punchline: "She looked surprised." },
+  { setup: "How do you organize a space party?", punchline: "You planet!" },
+  { setup: "What do you call a fish without eyes?", punchline: "A fsh!" },
+  { setup: "Why did the scarecrow win an award?", punchline: "He was outstanding in his field!" },
+  { setup: "I only know 25 letters of the alphabet.", punchline: "I don't know y." },
+  { setup: "What do you call a fake noodle?", punchline: "An im-pasta!" },
+  { setup: "Why did the bicycle fall over?", punchline: "Because it was two-tired!" },
+  { setup: "How does a penguin build its house?", punchline: "Igloos it together!" },
+  { setup: "What do you call a sleeping dinosaur?", punchline: "A dino-snore!" },
+  { setup: "I'm on a seafood diet.", punchline: "I see food and I eat it!" },
+  { setup: "What do you call a man with a rubber toe?", punchline: "Roberto!" },
+  { setup: "Why can't a nose be 12 inches long?", punchline: "Because then it would be a foot!" },
+  { setup: "What's brown and sticky?", punchline: "A stick!" },
+  { setup: "I asked my dog what two minus two is.", punchline: "He said nothing." },
+  { setup: "Why do cows wear bells?", punchline: "Because their horns don't work!" },
+  { setup: "What do you call a boomerang that won't come back?", punchline: "A stick!" },
+  { setup: "Why did the math book look so sad?", punchline: "Because it had too many problems!" },
+  { setup: "I don't trust stairs.", punchline: "They're always up to something!" },
+  { setup: "What do you call a bear with no teeth?", punchline: "A gummy bear!" },
+  { setup: "How do you make a tissue dance?", punchline: "Put a little boogie in it!" },
+  { setup: "What do you call an alligator in a vest?", punchline: "An investigator!" },
+  { setup: "Why don't eggs tell jokes?", punchline: "They'd crack each other up!" },
+  { setup: "What do you call a shoe made from a banana?", punchline: "A slipper!" },
+  { setup: "I used to be a banker...", punchline: "...but I lost interest!" },
+  { setup: "Why did the golfer bring an extra pair of pants?", punchline: "In case he got a hole in one!" },
+  { setup: "What's a vampire's favorite fruit?", punchline: "A blood orange!" },
+  { setup: "I invented a new word: Plagiarism.", punchline: "...wait." },
+  { setup: "What do you call a parade of rabbits hopping backwards?", punchline: "A receding hare-line!" },
+];
+let jokeIdx = 0;
+let laughs = 0, groans = 0;
+let punchlineVisible = false;
+
+function nextJoke() {
+  jokeIdx = Math.floor(Math.random() * jokes.length);
+  document.getElementById('joke-text').textContent = jokes[jokeIdx].setup;
+  document.getElementById('punchline').textContent = '';
+  document.getElementById('punchline').style.display = 'none';
+  document.getElementById('reveal-btn').style.display = 'inline-block';
+  document.getElementById('laugh-btn').style.display = 'none';
+  document.getElementById('groan-btn').style.display = 'none';
+  punchlineVisible = false;
+}
+
+function revealPunchline() {
+  document.getElementById('punchline').textContent = jokes[jokeIdx].punchline;
+  document.getElementById('punchline').style.display = 'block';
+  document.getElementById('reveal-btn').style.display = 'none';
+  document.getElementById('laugh-btn').style.display = 'inline-block';
+  document.getElementById('groan-btn').style.display = 'inline-block';
+  punchlineVisible = true;
+}
+
+function react(type) {
+  if (type === 'laugh') laughs++;
+  else groans++;
+  document.getElementById('groan-count').textContent = `Groans: ${groans} | Laughs: ${laughs}`;
+  nextJoke();
+}
+
+nextJoke();
+
+// ---- DAD STATS ----
+const statDefs = [
+  { name: '🍕 Pizza Slices Eaten', max: 10000 },
+  { name: '📺 Sports Watched (hrs)', max: 50000 },
+  { name: '🔧 Things "Fixed"', max: 2000 },
+  { name: '😂 Dad Jokes Told', max: 99999 },
+  { name: '🚗 "In My Day" Stories', max: 10000 },
+  { name: '💡 Lights Left On', max: 8000 },
+];
+
+function rerollStats() {
+  const container = document.getElementById('stats-container');
+  container.innerHTML = '';
+  statDefs.forEach(stat => {
+    const val = Math.floor(Math.random() * stat.max) + 100;
+    const pct = Math.min(100, Math.round((val / stat.max) * 100));
+    const row = document.createElement('div');
+    row.className = 'stat-row';
+    row.innerHTML = `
+      <span style="flex:1">${stat.name}</span>
+      <span style="margin-right:10px; font-size:0.85rem; color:#888">${val.toLocaleString()}</span>
+      <div class="stat-bar-wrap"><div class="stat-bar" style="width:0%" data-target="${pct}"></div></div>
+    `;
+    container.appendChild(row);
+    setTimeout(() => {
+      row.querySelector('.stat-bar').style.width = pct + '%';
+    }, 100 + Math.random() * 400);
+  });
+}
+
+rerollStats();
+
+// ---- GRILL METER ----
+let grillLevel = 0;
+
+function adjustGrill(delta) {
+  grillLevel = Math.max(0, Math.min(100, grillLevel + delta));
+  document.getElementById('grill-fill').style.width = grillLevel + '%';
+  const labels = [
+    [0, 'COLD GRILL', '🥩'],
+    [20, 'WARMING UP', '🔥'],
+    [40, 'GETTING HOT', '🍗'],
+    [60, 'SIZZLIN\'', '🌽'],
+    [80, 'DAD MODE: ACTIVATED', '🥓'],
+    [95, '🔥🔥🔥 LEGENDARY 🔥🔥🔥', '💥'],
+  ];
+  let lbl = labels[0];
+  for (const l of labels) { if (grillLevel >= l[0]) lbl = l; }
+  document.getElementById('grill-label').textContent = lbl[1];
+  document.getElementById('grill-emoji').textContent = lbl[2];
+}
+
+adjustGrill(30);
+
+// ---- TROPHY ----
+const trophyTitles = [
+  { title: "World's Best Dad", sub: "Certified by the International Bureau of Dads" },
+  { title: "Master of the Grill", sub: "5-Star Rating from the Backyard BBQ Committee" },
+  { title: "Supreme Commander of the TV Remote", sub: "All channels bow to him" },
+  { title: "Official Thermostat Guardian", sub: "72°F. Always 72°F." },
+  { title: "King of 'We Have Food At Home'", sub: "Fiscally responsible since day one" },
+  { title: "Champion of the Dad Wave", sub: "That little steering wheel salute is elite" },
+  { title: "Professor of Dad Jokes", sub: "PhD (Puns, humor, and Dadsplaining)" },
+  { title: "Architect of the Family Road Trip", sub: "We're not lost. This is a shortcut." },
+  { title: "Sultan of the Snack Cabinet", sub: "Nothing escapes his watchful eye" },
+  { title: "High Chancellor of the Garage", sub: "Ruler of tools he uses once a decade" },
+  { title: "Duke of the Early Morning Alarm", sub: "Up before the sun. Every. Single. Day." },
+  { title: "Grand Wizard of the Wi-Fi Password", sub: "Written on a sticky note since 2019" },
+  { title: "Baron of the Barbecue Tongs", sub: "Flipping burgers since before it was cool" },
+  { title: "Director of Unsanctioned Life Lessons", sub: "No agenda, all wisdom" },
+  { title: "Minister of Checking If You Locked the Door", sub: "He will go back. He will always go back." },
+  { title: "Earl of the Extremely Long Anecdote", sub: "It gets to the point. Eventually." },
+  { title: "Admiral of the Sunday Drive Nowhere", sub: "Destination: vibes" },
+  { title: "Overlord of the Thermostat and the Thermostat Alone", sub: "Do not touch it." },
+  { title: "Chief Executive of Doing It The Hard Way", sub: "Why use one tool when you can use seven?" },
+  { title: "Knight of the Backup Plan", sub: "He already thought of everything that could go wrong" },
+  { title: "Keeper of the Good Scissors", sub: "You know which ones. Don't use them." },
+  { title: "Patron Saint of Sensible Footwear", sub: "Comfort over style. Always." },
+  { title: "Grand Poobah of Parking Lot Strategy", sub: "He knows the spot. He always knows the spot." },
+];
+
+function newTrophy() {
+  const t = trophyTitles[Math.floor(Math.random() * trophyTitles.length)];
+  document.getElementById('trophy-text').textContent = t.title;
+  document.getElementById('trophy-sub').textContent = t.sub;
+}
+
+
+// ---- SPIN THE WHEEL ----
+const wheelItems = [
+  { label: 'Nap Time! 😴', color: '#f5c842' },
+  { label: 'Grill Something 🔥', color: '#f47c30' },
+  { label: 'Watch Sports 📺', color: '#3cb371' },
+  { label: 'Tell a Joke 😂', color: '#1a85ff' },
+  { label: 'Eat Dessert 🍰', color: '#e84040' },
+  { label: 'Family Walk 🚶', color: '#9b59b6' },
+  { label: 'Read a Book 📖', color: '#1abc9c' },
+  { label: 'Movie Time 🎬', color: '#e67e22' },
+  { label: 'Game Night 🎮', color: '#c0392b' },
+  { label: 'Happy Dance 🕺', color: '#2980b9' },
+];
+
+const wCanvas = document.getElementById('wheel-canvas');
+const wCtx = wCanvas.getContext('2d');
+let wheelAngle = 0;
+let wheelSpinning = false;
+
+function drawWheel(angle) {
+  const cx = wCanvas.width / 2, cy = wCanvas.height / 2, r = cx - 4;
+  const slice = (Math.PI * 2) / wheelItems.length;
+  wCtx.clearRect(0, 0, wCanvas.width, wCanvas.height);
+  wheelItems.forEach((item, i) => {
+    const start = angle + i * slice;
+    wCtx.beginPath();
+    wCtx.moveTo(cx, cy);
+    wCtx.arc(cx, cy, r, start, start + slice);
+    wCtx.fillStyle = item.color;
+    wCtx.fill();
+    wCtx.strokeStyle = '#fff';
+    wCtx.lineWidth = 2;
+    wCtx.stroke();
+    wCtx.save();
+    wCtx.translate(cx, cy);
+    wCtx.rotate(start + slice / 2);
+    wCtx.textAlign = 'right';
+    wCtx.fillStyle = '#fff';
+    wCtx.font = 'bold 11px Nunito, sans-serif';
+    wCtx.shadowColor = 'rgba(0,0,0,0.4)';
+    wCtx.shadowBlur = 3;
+    wCtx.fillText(item.label, r - 6, 4);
+    wCtx.restore();
+  });
+  // Center circle
+  wCtx.beginPath();
+  wCtx.arc(cx, cy, 18, 0, Math.PI * 2);
+  wCtx.fillStyle = '#1a2744';
+  wCtx.fill();
+  wCtx.strokeStyle = '#fff';
+  wCtx.lineWidth = 3;
+  wCtx.stroke();
+}
+
+drawWheel(0);
+
+function spinWheel() {
+  if (wheelSpinning) return;
+  wheelSpinning = true;
+  document.getElementById('wheel-result').textContent = '🌀 Spinning...';
+  const totalSpin = (Math.PI * 2 * (5 + Math.random() * 5)) + Math.random() * Math.PI * 2;
+  const duration = 3000 + Math.random() * 1000;
+  const start = performance.now();
+  const startAngle = wheelAngle;
+
+  function frame(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const ease = 1 - Math.pow(1 - progress, 4);
+    wheelAngle = startAngle + totalSpin * ease;
+    drawWheel(wheelAngle);
+    if (progress < 1) {
+      requestAnimationFrame(frame);
+    } else {
+      wheelSpinning = false;
+      const slice = (Math.PI * 2) / wheelItems.length;
+      const normalized = ((wheelAngle % (Math.PI * 2)) + Math.PI * 2) % (Math.PI * 2);
+      // Pointer is at top (pointing up = -PI/2), find which slice is there
+      const pointerAngle = (Math.PI * 2 - normalized + Math.PI * 1.5) % (Math.PI * 2);
+      const idx = Math.floor(pointerAngle / slice) % wheelItems.length;
+      document.getElementById('wheel-result').textContent = '🎉 ' + wheelItems[idx].label;
+    }
+  }
+  requestAnimationFrame(frame);
+}
+
+// ---- DAD WISDOM ----
+const quotes = [
+  { q: "Work hard, stay humble, and always double-check the oil.", by: "— Dad, probably" },
+  { q: "If it ain't broke... I'll still take a look at it.", by: "— Every Dad Ever" },
+  { q: "You can't go wrong with a good handshake and eye contact.", by: "— Dad's Life Manual, Ch. 1" },
+  { q: "We're not lost. I'm just exploring an alternate route.", by: "— Dad, GPS off" },
+  { q: "I'm not sleeping. I'm just resting my eyes.", by: "— Dad, 100% asleep" },
+  { q: "When I was your age, we had to walk uphill both ways.", by: "— Classic Dad, Vol. 3" },
+  { q: "The best investment is in your family.", by: "— Dad, being deep" },
+  { q: "Always carry a pocketknife. You'll thank me someday.", by: "— Dad, always prepared" },
+  { q: "Don't tell your mother.", by: "— Dad, being fun" },
+  { q: "I'll fix it this weekend.", by: "— Dad, 4 weekends ago" },
+  { q: "Close the fridge! Were you raised in a barn?", by: "— Dad's Greatest Hits" },
+  { q: "A little duct tape fixes almost anything.", by: "— Dad's Engineering Degree" },
+  { q: "Turn off the lights when you leave a room. Money doesn't grow on trees.", by: "— Dad, every day" },
+  { q: "It builds character.", by: "— Dad, regarding every difficult task" },
+  { q: "The answer is always more power tools.", by: "— Dad's Home Improvement Bible" },
+  { q: "If you're early, you're on time. On time is late. Late is unacceptable.", by: "— Dad, deeply serious" },
+  { q: "Let me show you the right way to do that.", by: "— Dad, 30 seconds after you started" },
+  { q: "A clean car is a happy car.", by: "— Dad, washing the car again" },
+];
+
+function newQuote() {
+  const q = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('quote-display').textContent = '"' + q.q + '"';
+  document.getElementById('quote-author').textContent = q.by;
+}
+
+function shareQuote() {
+  const text = document.getElementById('quote-display').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('#quote-card .btn.green');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 1500);
+  });
+}
+
+newQuote();
+
+// ---- DAD TRIVIA ----
+const triviaQuestions = [
+  { q: "What is the most popular gift for Father's Day?", opts: ["Tie", "Tools", "Grilling gear", "All of the above"], ans: 3 },
+  { q: "When is Father's Day celebrated in the US?", opts: ["First Sunday in June", "Third Sunday in June", "Last Sunday in June", "June 21st always"], ans: 1 },
+  { q: "Which country first officially celebrated Father's Day?", opts: ["United Kingdom", "Canada", "United States", "Australia"], ans: 2 },
+  { q: "What year was Father's Day made a US federal holiday?", opts: ["1958", "1966", "1972", "1980"], ans: 2 },
+  { q: "What flower is associated with Father's Day?", opts: ["Rose", "Sunflower", "White rose", "Carnation"], ans: 0 },
+  { q: "How many fathers are there in the United States?", opts: ["About 40 million", "About 60 million", "About 70 million", "About 85 million"], ans: 2 },
+  { q: "What's a classic Father's Day breakfast tradition?", opts: ["Pancakes in bed", "Cereal only", "Skipping breakfast", "Leftover pizza"], ans: 0 },
+  { q: "Which president signed Father's Day into a national holiday?", opts: ["JFK", "LBJ", "Nixon", "Ford"], ans: 2 },
+  { q: "What's the name of the dad in 'The Simpsons'?", opts: ["Bob", "Homer", "Bart", "Ned"], ans: 1 },
+  { q: "What is the #1 activity dads do on Father's Day?", opts: ["Fishing", "Watching TV", "Grilling", "Playing golf"], ans: 2 },
+];
+
+let triviaIdx = 0;
+let triviaCorrect = 0, triviaTotal = 0;
+let triviaAnswered = false;
+const shuffled = [...triviaQuestions].sort(() => Math.random() - 0.5);
+
+function newTrivia() {
+  triviaAnswered = false;
+  triviaIdx = (triviaIdx + 1) % shuffled.length;
+  renderTrivia();
+}
+
+function renderTrivia() {
+  const q = shuffled[triviaIdx];
+  document.getElementById('trivia-q').textContent = q.q;
+  document.getElementById('trivia-result').textContent = '';
+  const opts = document.getElementById('trivia-opts');
+  opts.innerHTML = '';
+  q.opts.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'btn';
+    btn.style.cssText = 'width:100%; text-align:left; background:white; color:#1a2744; border:2px solid #1a2744; padding:8px 12px; font-size:0.9rem;';
+    btn.textContent = opt;
+    btn.onclick = () => {
+      if (triviaAnswered) return;
+      triviaAnswered = true;
+      triviaTotal++;
+      if (i === q.ans) {
+        triviaCorrect++;
+        btn.style.background = '#3cb371';
+        btn.style.color = 'white';
+        document.getElementById('trivia-result').textContent = '✅ Correct!';
+        document.getElementById('trivia-result').style.color = '#3cb371';
+      } else {
+        btn.style.background = '#e84040';
+        btn.style.color = 'white';
+        opts.children[q.ans].style.background = '#3cb371';
+        opts.children[q.ans].style.color = 'white';
+        document.getElementById('trivia-result').textContent = '❌ Nope! The answer was: ' + q.opts[q.ans];
+        document.getElementById('trivia-result').style.color = '#e84040';
+      }
+      document.getElementById('trivia-score').textContent = 'Score: ' + triviaCorrect + ' / ' + triviaTotal;
+    };
+    opts.appendChild(btn);
+  });
+}
+
+renderTrivia();
+
+// ---- COMPLIMENT CANNON ----
+const compliments = [
+  "Dad, your hugs could cure anything. 🤗",
+  "You're the GOAT. Greatest Of All Time... at grilling. 🔥",
+  "You have the best laugh in the whole house. 😂",
+  "Dad, you make every road trip an adventure. 🚗",
+  "Your advice is always exactly what was needed. 💡",
+  "You are genuinely, objectively, scientifically the best. 🧪",
+  "You taught me more than any school ever could. 📚",
+  "Dad, your dedication is unmatched and inspiring. 💪",
+  "You somehow always know how to fix things. 🔧",
+  "You're the reason this family is awesome. 🌟",
+  "Your patience is legendary and deeply appreciated. 🙏",
+  "Dad, you're funnier than you think. (Don't tell him.) 😂",
+  "You showed up every single day. That means everything. ❤️",
+  "You always put the family first. That's heroic. 🦸",
+  "Thanks for always having the right tool for the job. 🛠️",
+  "You are categorically irreplaceable. 🏆",
+  "Your wisdom aged like fine cheese — better every year. 🧀",
+  "You are the backbone of this whole operation. 🦴",
+];
+let cannonCount = 0;
+
+function fireCompliment() {
+  cannonCount++;
+  const c = compliments[Math.floor(Math.random() * compliments.length)];
+  const el = document.getElementById('compliment-display');
+  el.style.opacity = 0;
+  setTimeout(() => {
+    el.textContent = c;
+    el.style.transition = 'opacity 0.4s';
+    el.style.opacity = 1;
+  }, 150);
+  document.getElementById('cannon-streak').textContent = 'Compliments fired: ' + cannonCount;
+  // shoot confetti burst
+  for (let i = 0; i < 18; i++) {
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = ['🎉','⭐','💛','🧡','❤️','🎊','💥'][Math.floor(Math.random()*7)];
+    h.style.left = (20 + Math.random() * 60) + 'vw';
+    h.style.top = (30 + Math.random() * 40) + 'vh';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1300);
+  }
+}
+
+// ---- FIREWORKS ----
+const canvas = document.getElementById('fw-canvas');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+let particles = [];
+let fwActive = false;
+let fwTimer = null;
+
+function launchFireworks() {
+  if (fwActive) return;
+  fwActive = true;
+  particles = [];
+  let count = 0;
+  const interval = setInterval(() => {
+    spawnFirework();
+    count++;
+    if (count >= 12) { clearInterval(interval); setTimeout(() => { fwActive = false; }, 3000); }
+  }, 200);
+}
+
+function spawnFirework() {
+  const x = 0.1 * canvas.width + Math.random() * 0.8 * canvas.width;
+  const y = 0.1 * canvas.height + Math.random() * 0.5 * canvas.height;
+  const hue = Math.random() * 360;
+  for (let i = 0; i < 80; i++) {
+    const angle = (i / 80) * Math.PI * 2;
+    const speed = 2 + Math.random() * 5;
+    particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      life: 1,
+      decay: 0.015 + Math.random() * 0.015,
+      hue: hue + Math.random() * 40 - 20,
+      size: 2 + Math.random() * 2,
+    });
+  }
+}
+
+function animateFireworks() {
+  ctx.fillStyle = 'rgba(0,0,0,0.12)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => {
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${p.hue}, 100%, 65%, ${p.life})`;
+    ctx.fill();
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.05;
+    p.vx *= 0.98;
+    p.life -= p.decay;
+  });
+  particles = particles.filter(p => p.life > 0);
+  if (particles.length === 0 && !fwActive) ctx.clearRect(0, 0, canvas.width, canvas.height);
+  requestAnimationFrame(animateFireworks);
+}
+
+animateFireworks();
+</script>
+</body>
+</html>
