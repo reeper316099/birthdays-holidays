@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cards Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0f1a2e;
+    --bg2: #172338;
+    --gold: #f5c842;
+    --orange: #f47c30;
+    --cream: #fdf6e3;
+  }
+
+  body {
+    background: var(--bg);
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  #cursor {
+    position: fixed;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 99999;
+    transform: translate(-50%, -50%);
+  }
+
+  #stars {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    animation: twinkle linear infinite alternate;
+  }
+
+  @keyframes twinkle {
+    from { opacity: 0.1; }
+    to { opacity: 0.8; }
+  }
+
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 60px 24px 80px;
+  }
+
+  header {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(3rem, 9vw, 6rem);
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 14px;
+    text-shadow: 4px 4px 0 var(--orange);
+  }
+
+  header h1 span { color: var(--gold); }
+
+  header p {
+    color: rgba(255,255,255,0.45);
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin-bottom: 20px;
+    padding-left: 4px;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 24px;
+  }
+
+  .event-card {
+    background: var(--cream);
+    border-radius: 20px;
+    border: 3px solid var(--bg);
+    box-shadow: 6px 6px 0px var(--gold);
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+
+  .event-card:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 9px 9px 0px var(--gold);
+  }
+
+  .event-card:active {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0px var(--gold);
+  }
+
+  .card-banner {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card-banner .bg-emoji {
+    position: absolute;
+    font-size: 5rem;
+    opacity: 0.12;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%) rotate(-15deg);
+  }
+
+  .card-body {
+    padding: 18px 20px 20px;
+  }
+
+  .card-body .tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 99px;
+    margin-bottom: 8px;
+  }
+
+  .card-body h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: #1a2744;
+    margin-bottom: 6px;
+    line-height: 1.2;
+  }
+
+  .card-body p {
+    font-size: 0.85rem;
+    color: #666;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .card-arrow {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    color: #1a2744;
+  }
+
+  .card-arrow::after {
+    content: '→';
+    font-size: 1rem;
+    transition: transform 0.15s;
+  }
+
+  .event-card:hover .card-arrow::after {
+    transform: translateX(4px);
+  }
+
+  footer {
+    text-align: center;
+    color: rgba(255,255,255,0.2);
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin-top: 56px;
+    line-height: 2;
+  }
+
+  .float-heart {
+    position: fixed;
+    font-size: 1.4rem;
+    pointer-events: none;
+    z-index: 9997;
+    animation: floatUp 1.1s ease-out forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-90px) scale(1.5); }
+  }
+
+  @media (max-width: 500px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 3rem; }
+  }
+</style>
+</head>
+<body>
+
+<div id="cursor">🐛</div>
+<div id="stars"></div>
+
+<div class="page">
+
+  <header>
+    <h1>Cards <span>Hub</span></h1>
+    <p>Interactive cards for holidays, birthdays, and special occasions.</p>
+  </header>
+
+  <div class="section-label">All Cards</div>
+  <div class="cards-grid">
+
+    <a href="Parents/fathers-day.html" class="event-card">
+      <div class="card-banner" style="background: linear-gradient(135deg, #1a2744, #2d4a7a);">
+        <div class="bg-emoji">👨</div>
+        🎉
+      </div>
+      <div class="card-body">
+        <span class="tag" style="background:#dbeafe; color:#1e40af;">Father's Day</span>
+        <h2>Happy Father's Day</h2>
+        <p>Bug parade, grill meter, dad jokes, trivia, fireworks & more.</p>
+        <div class="card-arrow">Open card</div>
+      </div>
+    </a>
+
+    <a href="Parents/mothers-birthday.html" class="event-card">
+      <div class="card-banner" style="background: linear-gradient(135deg, #6b2d5e, #c2507a);">
+        <div class="bg-emoji">🌸</div>
+        💐
+      </div>
+      <div class="card-body">
+        <span class="tag" style="background:#fce7f3; color:#9d174d;">Birthday</span>
+        <h2>Mom's Birthday</h2>
+        <p>A personal letter, confetti, and an interactive trophy for the best mom.</p>
+        <div class="card-arrow">Open card</div>
+      </div>
+    </a>
+
+  </div>
+
+  <footer>
+    Cards Hub &nbsp;·&nbsp; reeper316099.github.io<br>
+    made using some AI 🐛
+  </footer>
+
+</div>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  const bugs = ['🐛','🐞','🦋','🐝','🪲','🦎','🐌'];
+  let bi = 0;
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.addEventListener('click', e => {
+    bi = (bi + 1) % bugs.length;
+    cursor.textContent = bugs[bi];
+    const h = document.createElement('div');
+    h.className = 'float-heart';
+    h.textContent = ['🎉','⭐','💛','🧡','❤️','🎊'][Math.floor(Math.random()*6)];
+    h.style.left = e.clientX + 'px';
+    h.style.top = e.clientY + 'px';
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 1200);
+  });
+
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = 1 + Math.random() * 2.5;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${2+Math.random()*3}s;animation-delay:${Math.random()*3}s;`;
+    starsEl.appendChild(s);
+  }
+</script>
+</body>
+</html>
